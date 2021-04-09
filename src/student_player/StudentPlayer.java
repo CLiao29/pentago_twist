@@ -1,11 +1,20 @@
 package student_player;
 
+import java.util.ArrayList;
+
 import boardgame.Move;
 
 import pentago_twist.PentagoPlayer;
 import pentago_twist.PentagoBoardState;
+import pentago_twist.PentagoBoardState.Piece;
+import pentago_twist.PentagoMove;
 
 /** A player file submitted by a student. */
+/**
+ * 
+ * @author Congming Liao 260790998
+ *
+ */
 public class StudentPlayer extends PentagoPlayer {
 
     /**
@@ -23,15 +32,16 @@ public class StudentPlayer extends PentagoPlayer {
      * make decisions.
      */
     public Move chooseMove(PentagoBoardState boardState) {
-        // You probably will make separate functions in MyTools.
-        // For example, maybe you'll need to load some pre-processed best opening
-        // strategies...
-        MyTools.getSomething();
-
-        // Is random the best you can do?
-        Move myMove = boardState.getRandomMove();
-
+        int player = boardState.getTurnPlayer();
+    	Piece myPiece  = player==0?              Piece.WHITE : Piece.BLACK;
+    	
+    	int depth = 4;
+    	int alpha = Integer.MIN_VALUE;
+    	int beta = Integer.MAX_VALUE;
+    	
+    	MyTools.Pair myPair = MyTools.negaMax(boardState,depth,alpha,beta,myPiece);
+        assert myPair.getMove()!= null;
         // Return your move to be processed by the server.
-        return myMove;
+        return myPair.getMove();
     }
 }
